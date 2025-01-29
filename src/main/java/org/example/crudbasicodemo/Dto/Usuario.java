@@ -1,4 +1,4 @@
-package org.example.crudbasicodemo;
+package org.example.crudbasicodemo.Dto;
 
 import jakarta.persistence.*;
 
@@ -28,7 +28,7 @@ public class Usuario {
     @Column(name = "tipo", nullable = false)
     private String tipo;
 
-    @Column(name = "penalizacionHasta")
+    @Column(name = "penalizacion_hasta")
     private LocalDate penalizacionHasta;
 
     public Usuario() {
