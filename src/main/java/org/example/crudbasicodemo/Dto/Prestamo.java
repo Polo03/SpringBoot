@@ -1,5 +1,6 @@
 package org.example.crudbasicodemo.Dto;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import jakarta.persistence.*;
 import org.hibernate.annotations.OnDelete;
 import org.hibernate.annotations.OnDeleteAction;
@@ -16,8 +17,15 @@ public class Prestamo {
 
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
     @OnDelete(action = OnDeleteAction.CASCADE)
+    @JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
     @JoinColumn(name = "usuario_id", nullable = false)
     private Usuario usuario;
+
+    @ManyToOne(fetch = FetchType.LAZY, optional = false)
+    @OnDelete(action = OnDeleteAction.CASCADE)
+    @JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
+    @JoinColumn(name = "ejemplar_id", nullable = false)
+    private Ejemplar ejemplar;
 
     @Column(name = "fechaInicio", nullable = false)
     private LocalDate fechaInicio;
@@ -39,6 +47,14 @@ public class Prestamo {
 
     public void setUsuario(Usuario usuario) {
         this.usuario = usuario;
+    }
+
+    public Ejemplar getEjemplar() {
+        return ejemplar;
+    }
+
+    public void setEjemplar(Ejemplar ejemplar) {
+        this.ejemplar = ejemplar;
     }
 
     public LocalDate getFechaInicio() {

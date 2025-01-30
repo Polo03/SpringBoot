@@ -13,10 +13,10 @@ public class Ejemplar {
     @Column(name = "id", nullable = false)
     private Integer id;
 
-    @ManyToOne(fetch = FetchType.LAZY, optional = false)
+    @ManyToOne(fetch = FetchType.EAGER, optional = false)
     @OnDelete(action = OnDeleteAction.CASCADE)
     @JoinColumn(name = "isbn", nullable = false)
-    private Libro isbn;
+    private Libro libro;
 
     @ColumnDefault("'Disponible'")
     @Lob
@@ -32,11 +32,11 @@ public class Ejemplar {
     }
 
     public Libro getIsbn() {
-        return isbn;
+        return libro;
     }
 
-    public void setIsbn(Libro isbn) {
-        this.isbn = isbn;
+    public void setIsbn(Libro libro) {
+        this.libro = libro;
     }
 
     public String getEstado() {
