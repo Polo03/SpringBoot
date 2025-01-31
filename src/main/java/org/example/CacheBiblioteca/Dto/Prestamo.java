@@ -1,4 +1,4 @@
-package org.example.crudbasicodemo.Dto;
+package org.example.CacheBiblioteca.Dto;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import jakarta.persistence.*;

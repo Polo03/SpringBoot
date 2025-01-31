@@ -1,6 +1,6 @@
-package org.example.crudbasicodemo.Repository;
+package org.example.CacheBiblioteca.Repository;
 
-import org.example.crudbasicodemo.Dto.Libro;
+import org.example.CacheBiblioteca.Dto.Libro;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 

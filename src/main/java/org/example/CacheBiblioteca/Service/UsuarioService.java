@@ -1,8 +1,7 @@
-package org.example.crudbasicodemo.Service;
+package org.example.CacheBiblioteca.Service;
 
-import org.example.crudbasicodemo.Dto.Libro;
-import org.example.crudbasicodemo.Repository.UsuarioRepository;
-import org.example.crudbasicodemo.Dto.Usuario;
+import org.example.CacheBiblioteca.Repository.UsuarioRepository;
+import org.example.CacheBiblioteca.Dto.Usuario;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 

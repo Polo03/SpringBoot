@@ -1,4 +1,4 @@
-package org.example.crudbasicodemo.Dto;
+package org.example.CacheBiblioteca.Dto;
 
 import jakarta.persistence.*;
 import org.hibernate.annotations.ColumnDefault;

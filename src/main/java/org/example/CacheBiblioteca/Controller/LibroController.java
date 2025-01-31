@@ -1,9 +1,10 @@
-package org.example.crudbasicodemo.Controller;
+package org.example.CacheBiblioteca.Controller;
 
-import org.example.crudbasicodemo.Dto.Libro;
-import org.example.crudbasicodemo.Dto.Usuario;
-import org.example.crudbasicodemo.Service.LibroService;
+import org.example.CacheBiblioteca.Dto.Libro;
+import org.example.CacheBiblioteca.Service.LibroService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cache.annotation.CacheConfig;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -13,6 +14,7 @@ import java.util.Optional;
 
 @RestController
 @RequestMapping("/api/libros")
+@CacheConfig(cacheNames = {"libros"})
 public class LibroController {
 
     @Autowired
@@ -25,11 +27,18 @@ public class LibroController {
         return new ResponseEntity<>(libros, HttpStatus.OK);
     }
 
-    // ✅ Obtener un libro por ID (posición en la lista)
+    // ✅ Obtener un libro por ISBN
     @GetMapping("/{isbn}")
+    @Cacheable
     public ResponseEntity<Optional<Libro>> obtenerLibroPorIsbn(@PathVariable String isbn) {
-        Optional<Libro> libro = libroService.obtenerLibroPorIsbn(isbn);
-        return new ResponseEntity<>(libro, HttpStatus.OK);
+        try{
+            Thread.sleep(3000);
+            Optional<Libro> libro = libroService.obtenerLibroPorIsbn(isbn);
+            return new ResponseEntity<>(libro, HttpStatus.OK);
+        } catch (InterruptedException e) {
+            throw new RuntimeException(e);
+        }
+
     }
 
     // Crear libro

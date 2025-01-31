@@ -1,4 +1,4 @@
-package org.example.crudbasicodemo.Dto;
+package org.example.CacheBiblioteca.Dto;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;

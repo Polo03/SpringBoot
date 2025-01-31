@@ -1,10 +1,11 @@
-package org.example.crudbasicodemo.Controller;
+package org.example.CacheBiblioteca.Controller;
 
-import org.example.crudbasicodemo.Dto.Ejemplar;
-import org.example.crudbasicodemo.Dto.Libro;
-import org.example.crudbasicodemo.Service.EjemplarService;
-import org.example.crudbasicodemo.Service.LibroService;
+import org.example.CacheBiblioteca.Dto.Ejemplar;
+import org.example.CacheBiblioteca.Dto.Usuario;
+import org.example.CacheBiblioteca.Service.EjemplarService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cache.annotation.CacheConfig;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -14,6 +15,7 @@ import java.util.Optional;
 
 @RestController
 @RequestMapping("/api/ejemplares")
+@CacheConfig(cacheNames = {"ejemplares"})
 public class EjemplarController {
 
     @Autowired
@@ -28,9 +30,15 @@ public class EjemplarController {
 
     // Obtener ejemplar by ID
     @GetMapping("{id}")
+    @Cacheable
     public ResponseEntity<Optional<Ejemplar>> obtenerEjemplarByID(@PathVariable Integer id) {
-        Optional<Ejemplar> ejemplar = ejemplarService.obtenerEjemplarByID(id);
-        return new ResponseEntity<>(ejemplar, HttpStatus.OK);
+        try{
+            Thread.sleep(3000);
+            Optional<Ejemplar> ejemplar = ejemplarService.obtenerEjemplarByID(id);
+            return new ResponseEntity<>(ejemplar, HttpStatus.OK);
+        } catch (InterruptedException e) {
+            throw new RuntimeException(e);
+        }
     }
 
     // Crear ejemplar

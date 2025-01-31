@@ -1,8 +1,10 @@
-package org.example.crudbasicodemo.Controller;
+package org.example.CacheBiblioteca.Controller;
 
-import org.example.crudbasicodemo.Dto.Prestamo;
-import org.example.crudbasicodemo.Service.PrestamoService;
+import org.example.CacheBiblioteca.Dto.Prestamo;
+import org.example.CacheBiblioteca.Service.PrestamoService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cache.annotation.CacheConfig;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -12,6 +14,7 @@ import java.util.Optional;
 
 @RestController
 @RequestMapping("/api/prestamos")
+@CacheConfig(cacheNames = {"prestamos"})
 public class PrestamoController {
 
     @Autowired
@@ -26,9 +29,16 @@ public class PrestamoController {
 
     // ✅ Obtener un libro por ID (posición en la lista)
     @GetMapping("/{id}")
+    @Cacheable
     public ResponseEntity<Optional<Prestamo>> obtenerPrestamoPorID(@PathVariable Integer id) {
-        Optional<Prestamo> prestamo = prestamoService.obtenerPrestamoPorID(id);
-        return new ResponseEntity<>(prestamo, HttpStatus.OK);
+        try{
+            Thread.sleep(3000);
+            Optional<Prestamo> prestamo = prestamoService.obtenerPrestamoPorID(id);
+            return new ResponseEntity<>(prestamo, HttpStatus.OK);
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
+
     }
 
     // Crear libro
