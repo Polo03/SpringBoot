@@ -4,18 +4,31 @@ import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
 import jakarta.persistence.Table;
+import jakarta.validation.constraints.Max;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.Pattern;
+import org.antlr.v4.runtime.misc.NotNull;
 
 @Entity
 @Table(name = "libro")
 public class Libro {
     @Id
     @Column(name = "isbn", nullable = false, length = 20)
+    @NotNull
+    @NotBlank
+    @Pattern(regexp = "^(?:\\d{3}-\\d{1}-\\d{5}-\\d{3}-\\d{1}|\\d{13}$)",message = "El formato del ISBN es incorrecto")
     private String isbn;
 
     @Column(name = "titulo", nullable = false, length = 200)
+    @NotNull
+    @NotBlank
+    @Max(200)
     private String titulo;
 
     @Column(name = "autor", nullable = false, length = 100)
+    @NotNull
+    @NotBlank
+    @Max(100)
     private String autor;
 
     public String getIsbn() {

@@ -4,6 +4,8 @@ import org.example.CacheBiblioteca.Repository.UsuarioRepository;
 import org.example.CacheBiblioteca.Dto.Usuario;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 
 import java.util.List;
 import java.util.Optional;
@@ -46,6 +48,16 @@ public class UsuarioService {
             usuarioRepository.deleteById(id);
             return true;
         }
+        return false;
+    }
+
+
+    public boolean validarDNI(String dni) {
+        String letras = "TRWAGMYFPDXBNJZSQVHLCKE";
+        int numeros = Integer.parseInt(dni.substring(0,8));
+        int resto = numeros % 23;
+        if(dni.charAt(8)==letras.charAt(resto))
+            return true;
         return false;
     }
 

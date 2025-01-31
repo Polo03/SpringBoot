@@ -1,6 +1,5 @@
 package org.example.CacheBiblioteca.Controller;
 
-import org.example.CacheBiblioteca.Dto.Libro;
 import org.example.CacheBiblioteca.Dto.Usuario;
 import org.example.CacheBiblioteca.Service.UsuarioService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -45,25 +44,32 @@ public class UsuarioController {
     // Crear usuario
     @PostMapping
     public ResponseEntity<String> guardarUsuario(@RequestBody Usuario usuario) {
-        Usuario usuarioGuardar = usuarioService.guardarUsuario(usuario);
-
-        if (usuarioGuardar!=null) {
-            return ResponseEntity.ok("Usuario guardado con éxito");
-        } else {
-            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Usuario no guardado");
+        if(validarDNI(usuario.getDni())){
+            Usuario usuarioGuardar = usuarioService.guardarUsuario(usuario);
+            if (usuarioGuardar!=null) {
+                return ResponseEntity.ok("Usuario guardado con éxito");
+            } else {
+                return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Usuario no guardado");
+            }
+        }else{
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Su dni es incorrecto debido al algoritmo");
         }
+
     }
 
     //Actualizar usuario
     @PutMapping("/update")
     public ResponseEntity<String> actualizarUsuario(@RequestBody Usuario nuevoUsuario) {
-        boolean actualizado = usuarioService.actualizarUsuario(nuevoUsuario);
+        if(validarDNI(nuevoUsuario.getDni())){
+            boolean actualizado = usuarioService.actualizarUsuario(nuevoUsuario);
+            if (actualizado) {
+                return ResponseEntity.ok("Usuario actualizado con éxito");
+            } else {
+                return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Usuario no encontrado");
+            }
+        }else
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Su dni es incorrecto debido al algoritmo");
 
-        if (actualizado) {
-            return ResponseEntity.ok("Usuario actualizado con éxito");
-        } else {
-            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Usuario no encontrado");
-        }
     }
 
     //Eliminar un usuario por ID
@@ -76,6 +82,11 @@ public class UsuarioController {
         } else {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Usuario no encontrado");
         }
+    }
+
+    //Método para validar el DNI
+    public boolean validarDNI(String dni) {
+        return usuarioService.validarDNI(dni);
     }
 
 }

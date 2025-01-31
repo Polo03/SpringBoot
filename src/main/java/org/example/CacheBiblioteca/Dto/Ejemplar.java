@@ -1,6 +1,9 @@
 package org.example.CacheBiblioteca.Dto;
 
 import jakarta.persistence.*;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.Pattern;
+import org.antlr.v4.runtime.misc.NotNull;
 import org.hibernate.annotations.ColumnDefault;
 import org.hibernate.annotations.OnDelete;
 import org.hibernate.annotations.OnDeleteAction;
@@ -16,11 +19,15 @@ public class Ejemplar {
     @ManyToOne(fetch = FetchType.EAGER, optional = false)
     @OnDelete(action = OnDeleteAction.CASCADE)
     @JoinColumn(name = "isbn", nullable = false)
+    @NotNull
+    @NotBlank
     private Libro libro;
 
     @ColumnDefault("'Disponible'")
     @Lob
     @Column(name = "estado")
+    @Pattern(regexp = "^(disponible|prestado|dañado)$", message = "El formato del estado so puede ser disponible, prestado o dañado")
+    @NotBlank
     private String estado;
 
     public Integer getId() {
