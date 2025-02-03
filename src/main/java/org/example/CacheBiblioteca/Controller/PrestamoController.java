@@ -54,7 +54,7 @@ public class PrestamoController {
     }
 
     //Actualizar libro
-    @PutMapping("/update")
+    @PutMapping
     public ResponseEntity<String> actualizarPrestamo(@RequestBody Prestamo nuevoPrestamo) {
         boolean actualizado = prestamoService.actualizarPrestamo(nuevoPrestamo);
 

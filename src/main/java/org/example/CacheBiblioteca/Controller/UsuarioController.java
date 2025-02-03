@@ -58,7 +58,7 @@ public class UsuarioController {
     }
 
     //Actualizar usuario
-    @PutMapping("/update")
+    @PutMapping
     public ResponseEntity<String> actualizarUsuario(@RequestBody Usuario nuevoUsuario) {
         if(validarDNI(nuevoUsuario.getDni())){
             boolean actualizado = usuarioService.actualizarUsuario(nuevoUsuario);

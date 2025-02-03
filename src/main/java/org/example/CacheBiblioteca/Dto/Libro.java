@@ -4,31 +4,30 @@ import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
 import jakarta.persistence.Table;
-import jakarta.validation.constraints.Max;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Pattern;
 import jakarta.validation.constraints.Size;
-import org.antlr.v4.runtime.misc.NotNull;
+import jakarta.validation.constraints.NotNull;
 
 @Entity
 @Table(name = "libro")
 public class Libro {
     @Id
     @Column(name = "isbn", nullable = false, length = 20)
-    @NotNull
-    @NotBlank
+    @NotNull(message = "El isbn no puede ser nulo.")
+    @NotBlank(message = "El isbn no puede estar en blanco")
     @Pattern(regexp = "^(\\d{3}-\\d{1}-\\d{5}-\\d{3}-\\d{1}|\\d{13}$)",message = "El formato del ISBN es incorrecto")
     private String isbn;
 
     @Column(name = "titulo", nullable = false, length = 200)
-    @NotNull
-    @NotBlank
+    @NotNull(message = "El título no puede ser nulo.")
+    @NotBlank(message = "El título no puede estar en blanco")
     @Size(max = 200, message = "El título no puede tener más de 200 caracteres.")
     private String titulo;
 
     @Column(name = "autor", nullable = false, length = 100)
-    @NotNull
-    @NotBlank
+    @NotNull(message = "El autor no puede ser nulo.")
+    @NotBlank(message = "El autor no puede estar en blanco")
     @Size(max = 100, message = "El título no puede tener más de 100 caracteres.")
     private String autor;
 

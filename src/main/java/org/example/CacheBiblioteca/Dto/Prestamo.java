@@ -3,7 +3,7 @@ package org.example.CacheBiblioteca.Dto;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotBlank;
-import org.antlr.v4.runtime.misc.NotNull;
+import jakarta.validation.constraints.NotNull;
 import org.hibernate.annotations.OnDelete;
 import org.hibernate.annotations.OnDeleteAction;
 
@@ -21,24 +21,20 @@ public class Prestamo {
     @OnDelete(action = OnDeleteAction.CASCADE)
     @JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
     @JoinColumn(name = "usuario_id", nullable = false)
-    @NotNull
-    @NotBlank
+    @NotNull(message = "El usuario al que se hace referencia no puede ser nulo.")
     private Usuario usuario;
 
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
     @OnDelete(action = OnDeleteAction.CASCADE)
     @JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
     @JoinColumn(name = "ejemplar_id", nullable = false)
-    @NotNull
-    @NotBlank
+    @NotNull(message = "El ejemplar al que se hace referencia no puede ser nulo.")
     private Ejemplar ejemplar;
 
     @Column(name = "fechaInicio", nullable = false)
-    @NotBlank
     private LocalDate fechaInicio;
 
     @Column(name = "fechaDevolucion")
-    @NotBlank
     private LocalDate fechaDevolucion;
 
     public Integer getId() {

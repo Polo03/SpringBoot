@@ -54,7 +54,7 @@ public class EjemplarController {
     }
 
     //Actualizar ejemplar
-    @PutMapping("/update")
+    @PutMapping
     public ResponseEntity<String> actualizarEjemplar(@RequestBody Ejemplar nuevoEjemplar) {
         boolean actualizado = ejemplarService.actualizarEjemplar(nuevoEjemplar);
 

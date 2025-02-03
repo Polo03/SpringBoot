@@ -4,7 +4,8 @@ import jakarta.persistence.*;
 import jakarta.validation.constraints.Max;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Pattern;
-import org.antlr.v4.runtime.misc.NotNull;
+import jakarta.validation.constraints.Size;
+import jakarta.validation.constraints.NotNull;
 
 import java.time.LocalDate;
 
@@ -17,39 +18,38 @@ public class Usuario {
     private Integer id;
 
     @Column(name = "dni", nullable = false, length = 15)
-    @NotNull
-    @NotBlank
+    @NotNull(message = "El dni no puede ser nulo")
+    @NotBlank(message = "El dni no puede estar en blanco")
     @Pattern(regexp = "^\\d{8}[A-Z]$", message = "El formato del DNI no es el correcto")
     private String dni;
 
     @Column(name = "nombre", nullable = false, length = 100)
-    @NotNull
-    @NotBlank
-    @Pattern(regexp = "^[a-zA-Z0-9]+$", message = "El nombre solo puede tener caracteres alfanuméricos")
-    @Max(100)
+    @NotNull(message = "El nombre no puede ser nulo")
+    @NotBlank(message = "El nombre no puede estar en blanco")
+    @Pattern(regexp = "^[a-zA-Z0-9\s]+$", message = "El nombre solo puede tener caracteres alfanuméricos")
+    @Size(max = 100, message = "El título no puede tener más de 100 caracteres.")
     private String nombre;
 
     @Column(name = "email", nullable = false, length = 100)
-    @NotNull
-    @NotBlank
+    @NotNull(message = "El email no puede ser nulo")
+    @NotBlank(message = "El email no puede estar en blanco")
     @Pattern(regexp = "[A-Za-z0-9]{1,50}@gmail.com", message = "El formato del email no es el correcto")
     private String email;
 
     @Column(name = "password", nullable = false)
-    @NotNull
-    @NotBlank
+    @NotNull(message = "La password no puede ser nulo")
+    @NotBlank(message = "La password no puede estar en blanco")
     @Pattern(regexp = "^[a-zA-Z0-9]{4,12}$", message = "El formato de la contraseña es el incorrecto")
     private String password;
 
     @Lob
     @Column(name = "tipo", nullable = false)
-    @NotNull
-    @NotBlank
+    @NotNull(message = "El tipo no puede ser nulo")
+    @NotBlank(message = "El tipo no puede estar en blanco")
     @Pattern(regexp = "^(normal|administrador)$", message = "El formato del tipo solo adminte administrador o normal")
     private String tipo;
 
     @Column(name = "penalizacion_hasta")
-    @NotBlank
     private LocalDate penalizacionHasta;
 
     public Integer getId() {
