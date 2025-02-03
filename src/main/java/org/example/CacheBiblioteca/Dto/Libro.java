@@ -7,6 +7,7 @@ import jakarta.persistence.Table;
 import jakarta.validation.constraints.Max;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Pattern;
+import jakarta.validation.constraints.Size;
 import org.antlr.v4.runtime.misc.NotNull;
 
 @Entity
@@ -16,19 +17,19 @@ public class Libro {
     @Column(name = "isbn", nullable = false, length = 20)
     @NotNull
     @NotBlank
-    @Pattern(regexp = "^(?:\\d{3}-\\d{1}-\\d{5}-\\d{3}-\\d{1}|\\d{13}$)",message = "El formato del ISBN es incorrecto")
+    @Pattern(regexp = "^(\\d{3}-\\d{1}-\\d{5}-\\d{3}-\\d{1}|\\d{13}$)",message = "El formato del ISBN es incorrecto")
     private String isbn;
 
     @Column(name = "titulo", nullable = false, length = 200)
     @NotNull
     @NotBlank
-    @Max(200)
+    @Size(max = 200, message = "El título no puede tener más de 200 caracteres.")
     private String titulo;
 
     @Column(name = "autor", nullable = false, length = 100)
     @NotNull
     @NotBlank
-    @Max(100)
+    @Size(max = 100, message = "El título no puede tener más de 100 caracteres.")
     private String autor;
 
     public String getIsbn() {
@@ -55,4 +56,12 @@ public class Libro {
         this.autor = autor;
     }
 
+    @Override
+    public String toString() {
+        return "Libro{" +
+                "isbn='" + isbn + '\'' +
+                ", titulo='" + titulo + '\'' +
+                ", autor='" + autor + '\'' +
+                '}';
+    }
 }

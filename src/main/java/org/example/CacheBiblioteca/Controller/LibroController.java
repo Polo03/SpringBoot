@@ -44,6 +44,7 @@ public class LibroController {
     // Crear libro
     @PostMapping
     public ResponseEntity<String> guardarLibro(@RequestBody Libro libro) {
+        System.out.println(libro);
         Libro libroGuardar = libroService.guardarLibro(libro);
 
         if (libroGuardar!=null) {
@@ -54,7 +55,7 @@ public class LibroController {
     }
 
     //Actualizar libro
-    @PutMapping("/update")
+    @PutMapping
     public ResponseEntity<String> actualizarLibro(@RequestBody Libro nuevoLibro) {
         boolean actualizado = libroService.actualizarLibro(nuevoLibro);
 
