@@ -1,5 +1,6 @@
 package org.example.CacheBiblioteca.Controller;
 
+import jakarta.validation.Valid;
 import org.example.CacheBiblioteca.Dto.Libro;
 import org.example.CacheBiblioteca.Service.LibroService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -43,8 +44,7 @@ public class LibroController {
 
     // Crear libro
     @PostMapping
-    public ResponseEntity<String> guardarLibro(@RequestBody Libro libro) {
-        System.out.println(libro);
+    public ResponseEntity<String> guardarLibro(@RequestBody @Valid Libro libro) {
         Libro libroGuardar = libroService.guardarLibro(libro);
 
         if (libroGuardar!=null) {
